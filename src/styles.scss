@@ -26,6 +26,15 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+a {
+    text-decoration: none;
+    color: #252525;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 h2 {
     margin-bottom: 40px;
     padding-bottom: 10px;
@@ -46,8 +55,28 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+     .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+
+    .stats {
+        width: 200px;
+        padding: 8px 0;
+        border: 2px solid #04838F;
+        border-radius: 8px;
+        text-align: center;
+
+        strong {
+            display: block;
+        }
+    }
+}
 }
 
 .logo {
     height: 50px;
 }
+
