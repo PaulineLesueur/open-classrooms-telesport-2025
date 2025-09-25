@@ -4,11 +4,11 @@
     <div class="container">
         <div class="stats">
             Number of Olympics
-            <strong>XX</strong>
+            <strong>{{ olympicsCount$ | async }}</strong>
         </div>
         <div class="stats">
             Number of Countries
-            <strong>XX</strong>
+            <strong>{{ (olympics$ | async)?.length || 0 }}</strong>
         </div>
     </div>
 </section>
