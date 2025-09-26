@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   public olympics$!: Observable<Olympic[] | null | undefined>;
   public numberOfOlympics$! : Observable<number>;
   public numberOfCountries$! : Observable<number>;
+  public countriesWithTotals$!: Observable<{ country: string, medals: number, athletes: number }[]>;
 
   constructor(private olympicService: OlympicService) {}
 
@@ -19,6 +20,7 @@ export class HomeComponent implements OnInit {
     this.olympics$ = this.olympicService.getOlympics();
     this.numberOfOlympics$ = this.olympicService.getNumberOfOlympics();
     this.numberOfCountries$ = this.olympicService.getNumberOfCountries();
+    this.countriesWithTotals$ = this.olympicService.getCountriesWithTotals();
   }
 }
 
