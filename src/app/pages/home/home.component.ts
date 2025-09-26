@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -9,13 +9,17 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$: Observable<Olympic[] | null | undefined> = of(undefined);
-  public olympicsCount$: Observable<number> = of(0);
+  public olympics$!: Observable<Olympic[] | null | undefined>;
+  public numberOfOlympics$! : Observable<number>;
+  public numberOfCountries$! : Observable<number>;
 
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
-    this.olympicsCount$ = this.olympicService.getOlympicsCount();
+    this.numberOfOlympics$ = this.olympicService.getNumberOfOlympics();
+    this.numberOfCountries$ = this.olympicService.getNumberOfCountries();
   }
 }
+
+  
