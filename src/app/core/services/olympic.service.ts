@@ -47,16 +47,19 @@ export class OlympicService {
     );
   }
 
-  getCountriesWithTotals(): Observable<{ country: string, medals: number, athletes: number }[]> {
-  return this.getOlympics().pipe(
-    map(olympics => {
-      if (!olympics) return [];
-      return olympics.map(o => ({
-        country: o.country,
-        medals: o.participations.reduce((sum, p) => sum + p.medalsCount, 0),
-        athletes: o.participations.reduce((sum, p) => sum + p.athleteCount, 0)
-      }));
-    })
-  );
-}
+  getCountriesWithTotals(): Observable<{ id: number, country: string, entries: number, medals: number, athletes: number }[]> {
+    return this.getOlympics().pipe(
+      map(olympics => {
+        if (!olympics) return [];
+        return olympics.map(o => ({
+          id: o.id,
+          country: o.country,
+          entries: o.participations.length,
+          medals: o.participations.reduce((sum, p) => sum + p.medalsCount, 0),
+          athletes: o.participations.reduce((sum, p) => sum + p.athleteCount, 0)
+        }));
+      })
+    );
+  }
+
 }

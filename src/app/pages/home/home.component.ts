@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   public olympics$!: Observable<Olympic[] | null | undefined>;
   public numberOfOlympics$! : Observable<number>;
   public numberOfCountries$! : Observable<number>;
-  public countriesWithTotals$!: Observable<{ country: string, medals: number, athletes: number }[]>;
+  public countriesWithTotals$!: Observable<{ id: number, country: string, medals: number, athletes: number }[]>;
 
   constructor(private olympicService: OlympicService) {}
 
