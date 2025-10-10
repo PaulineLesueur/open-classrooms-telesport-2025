@@ -11,9 +11,5 @@
             <strong>{{ numberOfCountries$ | async }}</strong>
         </div>
     </div>
-
-    <div *ngFor="let c of countriesWithTotals$ | async">
-            <h5><a [routerLink]="['/details', c.id]">{{ c.country }}</a></h5>
-            <p>Total medals: {{ c.medals }}</p>
-            <p>Total athletes: {{ c.athletes }}</p>
-    </div>
+    <app-medals-chart></app-medals-chart>
+</section>

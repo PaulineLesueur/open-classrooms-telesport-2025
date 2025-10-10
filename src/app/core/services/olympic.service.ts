@@ -62,4 +62,12 @@ export class OlympicService {
     );
   }
 
+  getCountriesChartData(): Observable<{ name: string, value: number }[]> {
+    return this.getCountriesWithTotals().pipe(
+      map(countries => countries.map(c => ({ 
+        name: c.country, 
+        value: c.medals 
+      })))
+    );
+  }
 }
