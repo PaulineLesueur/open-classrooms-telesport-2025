@@ -26,7 +26,6 @@ export class MedalsChartComponent implements OnInit {
 
     this.data$ = this.olympicService.getCountriesWithTotals().pipe(
      map((countries: CountryTotals[]) => {
-        // Remplir la liste locale de pays (index => id)
         this.countries = countries.map(c => ({ id: c.id, country: c.country }));
 
         return {
@@ -44,7 +43,19 @@ export class MedalsChartComponent implements OnInit {
 
     this.options = {
       plugins: {
-        legend: { display: false },
+        legend: { 
+          display: true,
+          position: 'bottom',
+          onClick: (_event, legendItem, legend) => {
+            const index = legendItem.index;
+            if (index === undefined) return;
+
+            const country = this.countries[index];
+            if (country) {
+              this.router.navigate(['/details', country.id]);
+            }
+          }
+        },
         tooltip: {
           displayColors: false,
           backgroundColor: '#04838F',
@@ -75,7 +86,7 @@ export class MedalsChartComponent implements OnInit {
 
   onChartClick(event: any): void {
     console.log('chart click event ->', event);
-    
+
     const index = event.element?.index;
     if(index === undefined) return;
 
