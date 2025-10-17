@@ -6,14 +6,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { DetailComponent } from './pages/details/details.component';
-import { MedalsChartComponent } from "./pages/home/components/medals-chart/medals-chart.component";
 import { ChartModule } from 'primeng/chart';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { MedalsPieChartComponent } from './core/components/medals-pi-chart/medals-pie-chart.component';
+import { MedalsLineChartComponent } from './core/components/medals-line-chart/medals-line-chart.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent, MedalsChartComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, DetailComponent, ChartModule],
+  declarations: [AppComponent, HomeComponent, DetailComponent,NotFoundComponent, MedalsPieChartComponent, MedalsLineChartComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, ChartModule],
   providers: [providePrimeNG({ theme: { preset: Aura } })],
   bootstrap: [AppComponent],
 })

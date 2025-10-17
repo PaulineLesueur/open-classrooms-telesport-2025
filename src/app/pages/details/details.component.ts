@@ -4,11 +4,10 @@ import { Observable, map } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { CommonModule } from '@angular/common';
+import { MedalsLineChartComponent } from "src/app/core/components/medals-line-chart/medals-line-chart.component";
 
 @Component({
   selector: 'app-details',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
 })

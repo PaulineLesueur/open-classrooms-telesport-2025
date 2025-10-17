@@ -80,3 +80,9 @@ section {
     height: 50px;
 }
 
+@media only screen and (max-width: 850px) {
+  section .container {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

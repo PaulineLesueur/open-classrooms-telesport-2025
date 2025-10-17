@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
+import { Participation } from '../models/Participation';
 
 
 @Injectable({
@@ -14,18 +15,16 @@ export class OlympicService {
 
   constructor(private http: HttpClient) {}
 
-  loadInitialData() {
-    return this.http.get<Olympic[]>(this.olympicUrl).pipe(
-      tap((value) => this.olympics$.next(value)),
-      catchError((error, caught) => {
-        // TODO: improve error handling
-        console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
-        this.olympics$.next(null);
-        return caught;
-      })
-    );
-  }
+  loadInitialData(): Observable<Olympic[] | null> {
+  return this.http.get<Olympic[]>(this.olympicUrl).pipe(
+    tap((value) => this.olympics$.next(value)), 
+    catchError((error) => {
+      console.error('Erreur lors du chargement des données olympiques', error);
+      this.olympics$.next(null); 
+      return of(null); 
+    })
+  );
+}
 
   getOlympics(): Observable<Olympic[] | null | undefined> {
     return this.olympics$.asObservable();
@@ -58,6 +57,15 @@ export class OlympicService {
           medals: o.participations.reduce((sum, p) => sum + p.medalsCount, 0),
           athletes: o.participations.reduce((sum, p) => sum + p.athleteCount, 0)
         }));
+      })
+    );
+  }
+
+  getCountryParticipations(countryId: number): Observable<Participation[] | null> {
+    return this.getOlympics().pipe(
+      map(olympics => {
+        const country = olympics?.find(o => o.id === countryId);
+        return country ? country.participations : null;
       })
     );
   }
