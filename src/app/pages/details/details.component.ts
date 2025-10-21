@@ -20,6 +20,12 @@ export class DetailComponent implements OnInit {
     private olympicService: OlympicService
   ) {}
 
+  /**
+   * OnInit lifecycle method:
+   * - Retrieves the 'id' parameter from the current route.
+   * - Uses the OlympicService to get the list of countries with their totals.
+   * - Finds and exposes the country matching the given ID as an observable.
+   */
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id')); 
 

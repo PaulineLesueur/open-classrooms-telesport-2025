@@ -16,6 +16,13 @@ export class HomeComponent implements OnInit {
 
   constructor(private olympicService: OlympicService) {}
 
+  /**
+   * OnInit lifecycle method:
+   * - Initializes data streams by connecting component observables 
+   *   to the corresponding OlympicService observables.
+   * - Provides all necessary data for the home view: 
+   *   list of Olympics, number of games, number of countries, and aggregated stats.
+   */
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
     this.numberOfOlympics$ = this.olympicService.getNumberOfOlympics();

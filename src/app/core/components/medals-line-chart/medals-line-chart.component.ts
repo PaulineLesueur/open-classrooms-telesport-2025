@@ -14,11 +14,18 @@ export class MedalsLineChartComponent implements OnInit {
   options!: ChartOptions<'line'>;
   countryName!: string;
   lineColor = '#04838F'; 
-
   private colors = ['#956065', '#b8cbe7', '#89a1db', '#793d52', '#9780a1']; 
 
   constructor(private olympicService: OlympicService, private route: ActivatedRoute) {}
 
+  /**
+   * OnInit lifecycle method:
+   * - Extracts the country ID from the route parameters.
+   * - Fetches that country's participations from the OlympicService.
+   * - Builds the Chart.js dataset dynamically (years vs. medals).
+   * - Determines chart color and country name for display.
+   * - Initializes chart configuration options (tooltip, axes, etc.).
+   */
   ngOnInit(): void {
     const countryId$ = this.route.paramMap.pipe(
       map(params => Number(params.get('id')))
@@ -31,14 +38,17 @@ export class MedalsLineChartComponent implements OnInit {
 
           participations.sort((a, b) => a.year - b.year);
 
+          // Retrieve country name for display
           this.olympicService.getOlympics().subscribe(olympics => {
             const country = olympics?.find(c => c.id === id);
             this.countryName = country?.country ?? '';
           });
 
+          // Set a line color based on the country ID
           const index = id - 1; 
           this.lineColor = this.colors[index % this.colors.length];
 
+          // Build the chart dataset (years vs medals)
           return {
             labels: participations.map(p => p.year.toString()),
             datasets: [
@@ -56,6 +66,7 @@ export class MedalsLineChartComponent implements OnInit {
       ))
     );
 
+    // Chart display configuration (appearance and tooltips)
     this.options = {
       responsive: true,
       maintainAspectRatio: false,
@@ -78,7 +89,7 @@ export class MedalsLineChartComponent implements OnInit {
             label: (context) => `🏅 ${context.parsed.y}`,
             title: () => ''
           }
-         }
+        }
       },
       scales: {
         x: { title: { display: true, text: 'Dates' } },

@@ -14,10 +14,17 @@ import { Router } from '@angular/router';
 export class MedalsPieChartComponent implements OnInit {
   data$!: Observable<ChartData>;
   options!: ChartOptions<'pie'>;
-  private countries: { id: number, country: string}[] = [];
+  private countries: { id: number, country: string }[] = [];
 
   constructor(private olympicService: OlympicService, private router: Router) {}
 
+  /**
+   * OnInit lifecycle method:
+   * - Loads the initial Olympic data from the service.
+   * - Builds a reactive Chart.js dataset for the pie chart (countries vs. total medals).
+   * - Configures chart options, including legend interactivity and tooltips.
+   * - Enables navigation to the country details page when clicking a legend item.
+   */
   ngOnInit(): void {
     this.olympicService.loadInitialData().subscribe({
       next: () => {},
@@ -25,7 +32,7 @@ export class MedalsPieChartComponent implements OnInit {
     });
 
     this.data$ = this.olympicService.getCountriesWithTotals().pipe(
-     map((countries: CountryTotals[]) => {
+      map((countries: CountryTotals[]) => {
         this.countries = countries.map(c => ({ id: c.id, country: c.country }));
 
         return {
@@ -70,7 +77,6 @@ export class MedalsPieChartComponent implements OnInit {
           footerAlign: 'center',
           callbacks: {
             label: (context) => {
-              const label = context.label ?? '';
               const value = context.parsed ?? 0;
               return `🏅 ${value}`;
             }
@@ -84,14 +90,19 @@ export class MedalsPieChartComponent implements OnInit {
     };
   }
 
+  /**
+   * Handles click events on the chart itself:
+   * - Determines which slice (country) was clicked.
+   * - Navigates to that country's details page if found.
+   */
   onChartClick(event: any): void {
     console.log('chart click event ->', event);
 
     const index = event.element?.index;
-    if(index === undefined) return;
+    if (index === undefined) return;
 
     const country = this.countries[index];
-    if(country) {
+    if (country) {
       this.router.navigate(['/details', country.id]);
     }
   }
