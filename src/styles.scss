@@ -19,7 +19,7 @@ body {
 
 main {
     width: 80%;
-    height: 90%;
+    min-height: 90%;
     padding: 25px;
     border-radius: 10px;
     background: white;
@@ -50,6 +50,8 @@ h3 {
     font-size: 22px;
     color: white;
 }
+
+app-medals-line-chart { width: 100%; }
 
 section {
     display: flex;
