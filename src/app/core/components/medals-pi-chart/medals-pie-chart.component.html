@@ -1,7 +1,8 @@
-<p-chart
-  type="pie"
-  [data]="data$ | async"
-  [options]="options"
-  width="290"
-  (onDataSelect)="onChartClick($event)">
-</p-chart>
+<div class="chart-container">
+  <p-chart
+    type="pie"
+    [data]="data$ | async"
+    [options]="options"
+    (onDataSelect)="onChartClick($event)">
+  </p-chart>
+</div>
