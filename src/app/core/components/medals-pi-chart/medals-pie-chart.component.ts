@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { CountryTotals } from 'src/app/core/models/CountryTotals';
 import { ChartData } from 'src/app/core/models/ChartData';
@@ -15,6 +15,7 @@ export class MedalsPieChartComponent implements OnInit {
   data$!: Observable<ChartData>;
   options!: ChartOptions<'pie'>;
   private countries: { id: number, country: string }[] = [];
+  private destroy$ = new Subject<void>();
 
   constructor(private olympicService: OlympicService, private router: Router) {}
 
@@ -26,10 +27,12 @@ export class MedalsPieChartComponent implements OnInit {
    * - Enables navigation to the country details page when clicking a legend item.
    */
   ngOnInit(): void {
-    this.olympicService.loadInitialData().subscribe({
-      next: () => {},
-      error: (err) => console.error('Load data error', err)
-    });
+    this.olympicService.loadInitialData()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {},
+        error: (err) => console.error('Load data error', err)
+      });
 
     this.data$ = this.olympicService.getCountriesWithTotals().pipe(
       map((countries: CountryTotals[]) => {
@@ -90,6 +93,16 @@ export class MedalsPieChartComponent implements OnInit {
         animateScale: false
       }
     };
+  }
+
+  /**
+  * OnDestroy lifecycle method:
+  * - Automatically triggered when the component is destroyed.
+  * - Used to clean up subscriptions and prevent memory leaks.
+  */
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   /**

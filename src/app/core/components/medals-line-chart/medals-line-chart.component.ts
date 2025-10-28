@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartData, ChartOptions } from 'chart.js';
-import { map, Observable, switchMap } from 'rxjs';
+import { map, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { OlympicService } from '../../services/olympic.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,6 +15,7 @@ export class MedalsLineChartComponent implements OnInit {
   countryName!: string;
   lineColor = '#04838F'; 
   private colors = ['#956065', '#b8cbe7', '#89a1db', '#793d52', '#9780a1']; 
+  private destroy$ = new Subject<void>();
 
   constructor(private olympicService: OlympicService, private route: ActivatedRoute) {}
 
@@ -39,10 +40,12 @@ export class MedalsLineChartComponent implements OnInit {
           participations.sort((a, b) => a.year - b.year);
 
           // Retrieve country name for display
-          this.olympicService.getOlympics().subscribe(olympics => {
-            const country = olympics?.find(c => c.id === id);
-            this.countryName = country?.country ?? '';
-          });
+          this.olympicService.getOlympics()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(olympics => {
+              const country = olympics?.find(c => c.id === id);
+              this.countryName = country?.country ?? '';
+            });
 
           // Set a line color based on the country ID
           const index = id - 1; 
@@ -96,5 +99,15 @@ export class MedalsLineChartComponent implements OnInit {
         y: { title: { display: true, text: 'Médailles' }, beginAtZero: true }
       }
     };
+  }
+
+  /**
+   * OnDestroy lifecycle method:
+   * - Automatically triggered when the component is destroyed.
+   * - Used to clean up subscriptions and prevent memory leaks.
+   */
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

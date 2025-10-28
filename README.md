@@ -1,29 +1,66 @@
-# OlympicGamesStarter
+# Telesport
+![Angular](https://img.shields.io/badge/Angular-red?logo=angular&logoColor=white)
+![RxJS](https://img.shields.io/badge/RxJS-v7.8.0-B7178C?logo=reactivex&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript&logoColor=white)
+![SASS](https://img.shields.io/badge/SASS-hotpink?logo=sass&logoColor=white)
+![Node.js](https://img.shields.io/badge/node.js-v20.10.0-43853D?logo=node.js&logoColor=white)
+![npm](https://img.shields.io/badge/npm-v10.2.3-CB3837?logo=npm&logoColor=white)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+**Telesport** is an Angular application built as part of a training project.  
+It displays Olympic Games statistics using interactive data visualizations and reactive data streams.
 
-Don't forget to install your node_modules before starting (`npm install`).
+The project includes:
+- A **dashboard** page showing the number of Olympic editions, participating countries, and a pie chart of medals by country.
+- A **details** page showing statistics for a specific country, including a line chart illustrating its medals evolution over time.
 
-## Development server
+This project demonstrates solid use of Angular architecture, reactive programming (RxJS), and data visualization (Chart.js through PrimeNG).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+<br>
 
-## Build
+## Technical Highlights
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+| Area | Description |
+|------|--------------|
+| **Framework** | Angular 18 |
+| **Language** | TypeScript |
+| **Data Visualization** | Chart.js integrated via PrimeNG |
+| **Routing** | Angular Router |
+| **Reactive Programming** | RxJS Observables and the `async` pipe |
+| **Memory Management** | `ngOnDestroy()` with the `takeUntil()` pattern |
+| **Architecture** | Modular structure with reusable, isolated components |
+| **Mock Data** | Static JSON file used as a mock backend |
 
-## Where to start
+<br>
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+## Installation
+1. **Clone the repository**
+```bash
+   git clone https://github.com/PaulineLesueur/open-classrooms-telesport-2025.git
+   cd open-classrooms-telesport-2025
+```
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+2. **Install dependencies**<br>
+*Note: Ensure you have Node.js (version 22.11.0) and npm (version 11.0.0) installed locally*
+```bash
+    npm install
+```
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+3. **Run the development server**
+```bash
+    ng serve
+```
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+Visit the following URL in your browser: `http://localhost:4200/`
 
-You're now ready to implement the requested features.
+## Project structure
+- <strong>`src/app/core/models`</strong> : Contains the `Olympic`, `Participation`, `CountryTotals` and `ChartData` interfaces  defining the data structure.
+- <strong>`src/app/core/services`</strong> : Contains the `OlympicService` for fetching Olympic data.
+- <strong>`src/app/components`</strong> : 
+    - <strong>`medals-pie-chart`</strong> : Contain the pie chart displayed in details page
+    - <strong>`medals-line-chart`</strong> : Contain the line chart displayed in details page
+- <strong>`src/app/pages`</strong> :
+    - <strong>`home`</strong> : Display the list of countries and a pie chart of their total medals. Route `/`
+    - <strong>`details`</strong> : Shows detailed statistics and a line chart for a selected country. Route `/details/:id`
 
-Good luck!
+## Notes
+This project is a **fictional educational project** developed as part of an **OpenClassrooms certification program**.  It was created for learning purposes only and does not represent a real-world application or organization.
